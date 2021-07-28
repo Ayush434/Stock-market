@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <h3 id="change" style= "color: red">{{ message }}</h3>
+
+    <form action="/sell" onsubmit="return validate()" method="post">
+        <div class="form-group">
+            <select id="select" name="symbol" >
+                <option disabled selected value="notselected">Symbol</option>
+                {% for i in range(shareslength) %}
+                    <option  value="{{ stocks[i]["symbol"] }}">{{ stocks[i]["symbol"] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input id="shares" autocomplete="off" autofocus class="form-control" name="shares" placeholder="Shares" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">SELL</button>
+    </form>
+
+    <script>
+
+
+        function validate(){
+
+            let symbol = document.querySelector('#symbol').value;
+            let select = document.querySelector('#select').value;
+            let shares = document.querySelector('#shares').value;
+
+            if(select == "notselected" && shares == ""){
+                change.innerHTML = "All the fields are required";
+                return false;
+            }
+            else if(shares == ""){
+                change.innerHTML = "Number of shares are required";
+                return false;
+            }
+            else if(select == "notselected"){
+                change.innerHTML = "Symbol is required";
+                return false;
+            }
+            else if(shares <= "0"){
+                change.innerHTML = "Number of shares are invalid";
+                return false;
+            }
+
+            return true;
+
+        }
+
+
+    </script>
+
+{% endblock %}
